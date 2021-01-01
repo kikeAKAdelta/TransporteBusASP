@@ -1,0 +1,60 @@
+﻿@using PrimerWebUdemy.Models
+@model List<EmpleadoCLS>
+@{
+    ViewBag.Title = "EmpleadoView";
+}
+
+<h2>Lista Empleados</h2>
+
+<div class="container">
+    @Html.ActionLink("Agregar", "EmpleadoAdd", "Empleado", null, new { @class="btn btn-primary"})
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th width="15%">@Html.LabelFor(p => Model[0].iidEmpleado)</th>
+                    <th width="20%">@Html.LabelFor(p => Model[0].nombre)</th>
+                    <th>@Html.LabelFor(p => Model[0].apMaterno)</th>
+                    <th>@Html.LabelFor(p => Model[0].apPaterno)</th>
+                    <th>@Html.LabelFor(p => Model[0].nombreTipoUsuario)</th>
+                    <th>@Html.LabelFor(p => Model[0].nombreTipoContrato)</th>
+                    <th>Operaciones</th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td>@item.iidEmpleado</td>
+                        <td>@item.nombre</td>
+                        <td>@item.apMaterno</td>
+                        <td>@item.apPaterno</td>
+                        <td>@item.nombreTipoUsuario</td>
+                        <td>@item.nombreTipoContrato</td>
+                        <td>
+                            @Html.ActionLink(" ", "EditarEmpleado", "Empleado", new { id = @item.iidEmpleado }, new { @class = "glyphicon glyphicon-edit btn btn-primary" })
+                            @Html.ActionLink(" ", "EliminarEmpleado", "Empleado", new { id = @item.iidEmpleado }, new { @class = "glyphicon glyphicon-trash btn btn-danger", @onclick= "eliminarEmpleado()"})
+                        </td>
+                    </tr>
+
+                }
+
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function eliminarEmpleado(){
+        if(confirm("¿Desea eliminar este registro?")==1){
+            alert("se elimino correctamente");
+        } else {
+            event.preventDefault();
+        }
+    }
+</script>
+

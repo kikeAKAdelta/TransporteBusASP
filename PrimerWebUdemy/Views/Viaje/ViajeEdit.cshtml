@@ -1,0 +1,56 @@
+﻿@model PrimerWebUdemy.Models.ViajeCLS
+@{
+    ViewBag.Title = "ViajeAgregar";
+    List<SelectListItem> listaBus = (List<SelectListItem>)ViewBag.listaBus;
+    List<SelectListItem> listaLugarOrigen = (List<SelectListItem>)ViewBag.listaLugarOrigen;
+    List<SelectListItem> listaLugarDestino = (List<SelectListItem>)ViewBag.listaLugarDestino;
+}
+
+<h2>Agregar Viaje</h2>
+
+<div class="row">
+
+    @using (Html.BeginForm("ViajeEdit", "Viaje", FormMethod.Post, new { @id = "frmEditar" }))
+    {
+        @Html.HiddenFor(p => p.iidViaje)
+
+        @Html.LabelFor(p => p.iidBus)
+        @Html.DropDownList("iidBus", listaBus, null, new { @class = "form-control" })
+        @Html.ValidationMessage("iidBus");
+
+        @Html.LabelFor(p => p.precio)
+        @Html.TextBoxFor(p => p.precio, new { @class = "form-control" })
+        @Html.ValidationMessage("precio");
+
+        @Html.LabelFor(p => p.numeroAsientosDisponibles)
+        @Html.TextBoxFor(p => p.numeroAsientosDisponibles, new { @class = "form-control" })
+        @Html.ValidationMessage("numeroAsientosDisponibles");
+
+        @Html.LabelFor(p => p.fechaViaje)
+        @Html.EditorFor(p => p.fechaViaje, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessage("fechaViaje");
+
+        @Html.LabelFor(p => p.nombreLugarOrigen)
+        @Html.DropDownList("iidLugarOrigen", listaLugarOrigen, null, new { @class = "form-control" })
+        @Html.ValidationMessage("iidLugarOrigen");
+
+        @Html.LabelFor(p => p.nombreLugarDestino)
+        @Html.DropDownList("iidLugarDestino", listaLugarDestino, null, new { @class = "form-control" })
+        @Html.ValidationMessage("iidLugarDestino");
+
+        <div>
+            <input type="submit" value="Agregar" class="btn btn-primary" />
+            @Html.ActionLink("Cancelar", "ViajeView", "Viaje", null, new { @class = "btn btn-danger" });
+        </div>
+    }
+</div>
+<script>
+    var frmSucursal = document.getElementById("frmEditar");
+    frmSucursal.onsubmit = function (e) {
+        e.preventDefault();
+
+        if(confirm("¿Estas seguro de editar el viaje?") == 1){
+            frmSucursal.submit();
+        }
+    }
+</script>

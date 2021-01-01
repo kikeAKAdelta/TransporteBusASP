@@ -1,0 +1,51 @@
+﻿@using PrimerWebUdemy.Models
+@model List<SucursalCLS>
+
+@{
+    ViewBag.Title = "SucursalView";
+}
+
+<h2>SucursalView</h2>
+
+@Html.ActionLink("Agregar", "SucursalAgregar", "Sucursal", null, new { @class="btn btn-primary"})
+
+<table class="table table-hover table-bordered">
+    <tr>
+        <th>@Html.LabelFor(d => Model[0].iidsucursal)</th>
+        <th>@Html.LabelFor(d => Model[0].nombre)</th>
+        <th>@Html.LabelFor(d => Model[0].telefono)</th>
+        <th>@Html.LabelFor(d => Model[0].email)</th>
+        <th>Operaciones</th>
+    </tr>
+
+    
+        @foreach (var item in Model)
+        {
+
+    <tr>
+        <td>@item.iidsucursal</td>
+        <td>@item.nombre</td>
+        <td>@item.telefono</td>
+        <td>@item.email</td>
+        <td>
+            @Html.ActionLink(" ", "EditarSucursal", "Sucursal", new { id = @item.iidsucursal }, new { @class = "glyphicon glyphicon-edit btn btn-primary" })
+            @Html.ActionLink(" ", "EliminarSucursal", "Sucursal", new { id = @item.iidsucursal }, new { @class = "glyphicon glyphicon-trash btn btn-danger", @onclick="eliminarSucursal()" })
+        </td>
+
+    </tr>
+
+
+        }
+    
+</table>
+
+<script>
+    function eliminarSucursal(){
+        if(confirm("¿Desea eliminar este registro?")==1){
+            alert("se elimino correctamente");
+        } else {
+            event.preventDefault();
+        }
+    }
+</script>
+

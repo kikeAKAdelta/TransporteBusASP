@@ -1,0 +1,38 @@
+﻿@using PrimerWebUdemy.Models
+@model List<ViajeCLS>
+@{
+    ViewBag.Title = "ViajeView";
+}
+
+<h2>ViajeView</h2>
+
+@Html.ActionLink("Agregar","ViajeAgregar", "Viaje",null, new { @class="btn btn-primary" })
+
+<table class="table table-hover">
+    <tr>
+        <th>@Html.LabelFor(p => Model[0].iidViaje)</th>
+        <th>@Html.LabelFor(p => Model[0].nombreLugarOrigen)</th>
+        <th>@Html.LabelFor(p => Model[0].nombreLugarDestino)</th>
+        <th>@Html.LabelFor(p => Model[0].nombreBus)</th>
+        <th>@Html.LabelFor(p => Model[0].numeroAsientosDisponibles)</th>
+        <th>@Html.LabelFor(p => Model[0].fechaViaje)</th>
+        <th>Operaciones</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.iidViaje</td>
+            <td>@item.nombreLugarOrigen</td>
+            <td>@item.nombreLugarDestino</td>
+            <td>@item.nombreBus</td>
+            <td>@item.numeroAsientosDisponibles</td>
+            <td>@item.fechaViaje</td>
+            <td>
+                @Html.ActionLink(" ", "ViajeEdit", "Viaje", new { id = @item.iidViaje }, new { @class = "glyphicon glyphicon-edit btn btn-primary" })
+                @Html.ActionLink(" ", "EliminarView", "Viaje", new { id = @item.iidViaje }, new { @class = "glyphicon glyphicon-trash btn btn-danger" })
+            </td>
+        </tr>
+    }
+</table>
+

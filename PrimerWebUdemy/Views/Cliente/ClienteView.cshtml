@@ -1,0 +1,44 @@
+﻿@using PrimerWebUdemy.Models
+@model List<ClienteCLS>
+@{
+    ViewBag.Title = "ClienteView";
+}
+
+<h2>ClienteView</h2>
+@Html.ActionLink("Agregar", "ClienteAgregar", "Cliente", null, new { @class="btn btn-primary" })
+<table class="table table-hover table-bordered">
+    <tr>
+        <th>@Html.LabelFor(d => Model[0].iidcliente)</th>
+        <th>@Html.LabelFor(d => Model[0].nombre)</th>
+        <th>@Html.LabelFor(d => Model[0].apPaterno)</th>
+        <th>@Html.LabelFor(d => Model[0].apMaterno)</th>
+        <th>@Html.LabelFor(d => Model[0].telefonoFijo)</th>
+        <th>Operaciones</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>@item.iidcliente</td>
+        <td>@item.nombre</td>
+        <td>@item.apPaterno</td>
+        <td>@item.apMaterno</td>
+        <td>@item.telefonoFijo</td>
+        <td>
+            @Html.ActionLink(" ", "ClienteEditar", "Cliente", new { id = @item.iidcliente }, new { @class = "glyphicon glyphicon-edit btn btn-primary" })
+            @Html.ActionLink(" ", "ClienteEliminar", "Cliente", new { id = @item.iidcliente }, new { @class = "glyphicon glyphicon-trash btn btn-danger", @onclick = "eliminarCliente()" })
+        </td>
+    </tr>
+    }
+</table>
+
+<script>
+    function eliminarCliente(){
+        if(confirm("¿Desea eliminar este registro?")==1){
+            alert("se elimino correctamente");
+        } else {
+            event.preventDefault();
+        }
+    }
+</script>
+

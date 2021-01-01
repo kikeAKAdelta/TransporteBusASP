@@ -1,0 +1,59 @@
+﻿@using PrimerWebUdemy.Models
+@model MarcaCLS
+@{
+    ViewBag.Title = "MarcaEditar";
+}
+
+<h2>Marca Editar</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            @using (Html.BeginForm("MarcaEditar", "Marca", FormMethod.Post, new { @id = "frmEditar", @class = "form-group" }))
+            {
+                <div>
+                    @Html.HiddenFor(p => p.iidmarca)
+                </div>
+                <div>
+                    @Html.LabelFor(p => p.nombre)
+                    @Html.TextBoxFor(p => p.nombre, new { @class = "form-control" })
+                    @Html.ValidationMessage("nombre", new { @class = "text-danger" })
+                    @if (Model != null && Model.mensajeError != null)
+                    {
+                        @Html.Label(Model.mensajeError, new { @class = "text-danger" })
+                    }
+                </div>
+                <div>
+                    @Html.LabelFor(p => p.descripcion)
+                    @Html.TextBoxFor(p => p.descripcion, new { @class = "form-control" })
+                    @Html.ValidationMessage("descripcion", new { @class = "text-danger" })
+                </div>
+
+                <br />
+
+                <div style="margin:auto;">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                    @Html.ActionLink("Cancelar", "MarcaView", "Marca", null, new { @class="btn btn-danger" });
+                </div>
+
+            }
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    var frmEditar = document.getElementById("frmEditar");
+
+    frmEditar.onsubmit = function (e) {
+        e.preventDefault();
+
+        if(confirm("¿Deseas guardar los cambios?") == 1){
+            frmEditar.submit();
+        }
+    }
+
+
+</script>

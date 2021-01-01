@@ -1,0 +1,86 @@
+﻿@using PrimerWebUdemy.Models
+@model EmpleadoCLS
+@{
+    ViewBag.Title = "EmpleadoAdd";
+    List<SelectListItem> opcionesSexo = (List<SelectListItem>)ViewBag.listaSexoViewBag;
+    List<SelectListItem> opcionesTipoUsuario = (List<SelectListItem>)ViewBag.listaTipoUsuarioViewBag;
+    List<SelectListItem> opcionesTipoContrato = (List<SelectListItem>)ViewBag.listaTipoContratoViewBag;
+}
+
+<h2>EmpleadoAdd</h2>
+
+
+@using (Html.BeginForm("EditarEmpleado", "Empleado", FormMethod.Post, new { @id= "frmEditar" }))
+{
+    <div>
+        @Html.HiddenFor(p => p.iidEmpleado, new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.LabelFor(p => p.nombre)
+        @Html.TextBoxFor(p => p.nombre, new { @class = "form-control" })
+        @Html.ValidationMessage("nombre", new { @class = "text-danger" })
+        @if (Model != null && Model.mensajeError != null)
+        {
+            @Html.Label(Model.mensajeError, new { @class = "text-danger" })
+        }
+    </div>
+
+    <div>
+        @Html.LabelFor(p => p.apPaterno)
+        @Html.TextBoxFor(p => p.apPaterno, new { @class = "form-control" })
+        @Html.ValidationMessage("apPaterno", new { @class = "text-danger" })
+    </div>
+
+    <div>
+        @Html.LabelFor(p => p.apMaterno)
+        @Html.TextBoxFor(p => p.apMaterno, new { @class = "form-control" })
+        @Html.ValidationMessage("apMaterno", new { @class = "text-danger" })
+    </div>
+
+    <div>
+        @Html.LabelFor(p => p.fechaContrato)
+        @Html.EditorFor(p => p.fechaContrato, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessage("fechaContrato", new { @class = "text-danger" })
+    </div>
+
+    <div>
+        @Html.LabelFor(p => p.sueldo)
+        @Html.TextBoxFor(p => p.sueldo, new { @class = "form-control" })
+        @Html.ValidationMessage("sueldo", new { @class = "text-danger" })
+    </div>
+
+    <div>
+        @Html.LabelFor(p => p.iidtipoUsuario)
+        @Html.DropDownList("iidtipoUsuario", opcionesTipoUsuario, null, new { @class = "form-control" })
+        @Html.ValidationMessage("iidtipoUsuario", new { @class = "text-danger" })
+    </div>
+
+    <div>
+        @Html.LabelFor(p => p.iidtipoContrato)
+        @Html.DropDownList("iidtipoContrato", opcionesTipoContrato, null, new { @class = "form-control" })
+        @Html.ValidationMessage("iidtipoContrato", new { @class = "text-danger" })
+    </div>
+
+    <div>
+        @Html.LabelFor(p => p.iidSexo)
+        @Html.DropDownList("iidSexo", opcionesSexo, null, new { @class = "form-control" })
+        @Html.ValidationMessage("iidSexo", new { @class = "text-danger" })
+    </div>
+
+    <input type="submit" value="Enviar" class="btn btn-primary" />
+    @Html.ActionLink("Cancelar", "EmpleadoView", "Empleado", null, new { @class = "btn btn-danger" });
+}
+
+
+<script>
+    var frmEditar = document.getElementById("frmEditar");
+
+    frmEditar.onsubmit = function (e) {
+        e.preventDefault();
+
+        if(confirm("¿Desea crear editar el empleado?") == 1){
+            frmEditar.submit();
+        }
+    }
+</script>
+

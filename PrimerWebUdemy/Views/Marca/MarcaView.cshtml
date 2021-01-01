@@ -1,0 +1,50 @@
+﻿@using PrimerWebUdemy.Models
+@model List<MarcaCLS>
+@{
+    ViewBag.Title = "MarcaView";
+}
+
+<h2>MarcaView</h2>
+
+<div class="container">
+    @Html.ActionLink("Agregar", "MarcaAgregar", "Marca", null, new { @class="btn btn-primary"})
+    @Html.ActionLink("Generar Pdf", "GenerarPdf", "Marca", null, new { @class = "btn btn-primary", @target="_blank" })
+    <br />
+    <br />
+    <div class="row">
+        <table class="table table-hover">
+            <tr>
+                <th width="10%">@Html.LabelFor(p => Model[0].iidmarca)</th>
+                <th width="20%">@Html.LabelFor(p => Model[0].nombre)</th>
+                <th width="60%">@Html.LabelFor(p => Model[0].descripcion)</th>
+                <th width="10%">Operaciones</th>
+            </tr>
+            @foreach (var elemento in Model)
+            {
+            <tr>
+                <td>@elemento.iidmarca</td>
+                <td>@elemento.nombre</td>
+                <td>@elemento.descripcion</td>
+                <td>
+                    @Html.ActionLink(" ", "MarcaEditar", "Marca", new { id = @elemento.iidmarca }, new { @class="glyphicon glyphicon-edit btn btn-primary" } )
+                    @Html.ActionLink(" ", "EliminarView","Marca", new { id = @elemento.iidmarca }, new { @class="glyphicon glyphicon-trash btn btn-danger", @onclick= "eliminar()" })
+                </td>
+            </tr>
+            }
+        </table>
+    </div>
+
+</div>
+
+<script>
+    function eliminar() {
+        
+
+        if(confirm("¿Desea eliminar el registro?")==1){
+            alert("Se elimino correctamente");
+        } else {
+            event.preventDefault();
+        }
+    }
+</script>
+

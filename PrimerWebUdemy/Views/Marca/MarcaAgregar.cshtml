@@ -1,0 +1,60 @@
+﻿@using PrimerWebUdemy.Models
+@model MarcaCLS
+@{
+    ViewBag.Title = "MarcaAgregar";
+}
+
+<h2>Marca Agregar</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            @using (Html.BeginForm("MarcaAgregar", "Marca", FormMethod.Post, new {@id= "frmAgregar", @class="form-group"}))
+            {
+
+            <div>
+                @Html.LabelFor(p => p.nombre)
+                @Html.TextBoxFor(p => p.nombre, new { @class = "form-control" }) 
+                @Html.ValidationMessage("nombre", new { @class = "text-danger" })
+                @if(Model != null && Model.mensajeError != null){
+                    @Html.Label(Model.mensajeError, new { @class="text-danger"})
+                }
+
+            </div>
+                <div>
+                    @Html.LabelFor(p => p.descripcion)
+                    @Html.TextBoxFor(p => p.descripcion, new { @class="form-control" })
+                    @Html.ValidationMessage("descripcion", new { @class="text-danger"})
+                </div>
+
+                <br />
+
+                <div style="margin:auto;">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                    @Html.ActionLink("Cancelar", "MarcaView", "Marca", null, new { @class = "btn btn-danger" });
+                </div>
+
+            }
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    var frmEditar = document.getElementById("frmAgregar");
+
+    frmEditar.onsubmit = function (e) {
+        e.preventDefault();
+
+        if(confirm("¿Desea crear una nueva marca?") == 1){
+            frmEditar.submit();
+        }
+    }
+
+
+</script>
+
+
+
