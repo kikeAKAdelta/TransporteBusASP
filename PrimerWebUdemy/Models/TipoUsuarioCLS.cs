@@ -18,6 +18,7 @@ namespace PrimerWebUdemy.Models
 
         [Display(Name = "Descripcion tipo usuario")]
         [Required]
+        [StringLength(250, ErrorMessage = "Longitud Maxima 250")]
         public string descripcion { get; set; }
 
         [Display(Name = "Habilitado")]

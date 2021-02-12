@@ -270,6 +270,7 @@
     <Content Include="Views\Bus\Editar.cshtml" />
     <Content Include="Views\Viaje\ViajeAgregar.cshtml" />
     <Content Include="Views\Viaje\ViajeEdit.cshtml" />
+    <Content Include="Views\TipoUsuario\TipoUsuarioView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -279,7 +280,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\TipoUsuario\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
