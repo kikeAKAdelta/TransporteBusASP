@@ -2,12 +2,19 @@
 @model List<BusCLS>
 @{
     ViewBag.Title = "BusView";
+    List<SelectListItem> listaModelo = (List<SelectListItem>)ViewBag.listaModelo;
+    List<SelectListItem> listaMarca = (List<SelectListItem>)ViewBag.listaMarca;
+    List<SelectListItem> listaTipoBus = (List<SelectListItem>)ViewBag.listaTipoBus;
+    List<SelectListItem> listaSucursal = (List<SelectListItem>)ViewBag.listaSucursal;
 }
 
 <h2>BusView</h2>
 
 <div class="container">
     @Html.ActionLink("Agregar","Agregar","Bus",new { @class="btn btn-primary"})
+
+@using (Html.BeginForm("BusView", "Bus", FormMethod.Post, new { @id="frmBusqueda"}))
+{
     <table class="table table-hover table-bordered">
         <tr>
             <th>@Html.LabelFor(p => Model[0].iidBus)</th>
@@ -16,6 +23,13 @@
             <th>@Html.LabelFor(p => Model[0].nombreSucursal)</th>
             <th>@Html.LabelFor(p => Model[0].nombreTipoBus)</th>
             <th>Operaciones</th>
+        </tr>
+        <tr>
+            <td>@Html.TextBox("iidBus", null, new { @class="form-control"})</td>
+            <td>@Html.TextBox("placa", null, new { @class = "form-control" })</td>
+            <td>@Html.DropDownList("iidModelo", listaModelo, null, new { @class= "form-control"})</td>
+            <td>@Html.DropDownList("iidSucursal", listaSucursal, null, new { @class = "form-control" })</td>
+            <td>@Html.DropDownList("iidTipoBus", listaTipoBus, null, new { @class = "form-control" })</td>
         </tr>
 
         @foreach (var item in Model)
@@ -34,9 +48,22 @@
         </tr>
         }
     </table>
+}
 </div>
 
+
+
 <script>
+    var frmBusqueda = document.getElementById("frmBusqueda");
+    var controles = document.getElementsByClassName("form-control");
+    var ncontroles = controles.length;
+
+    for (var i = 0; i < ncontroles; i++){
+        controles[i].onchange = function () {
+            frmBusqueda.submit();
+        }
+    }
+
     function eliminarBus(){
         if(confirm("¿Desea eliminar este registro?")==1){
             alert("se elimino correctamente");
