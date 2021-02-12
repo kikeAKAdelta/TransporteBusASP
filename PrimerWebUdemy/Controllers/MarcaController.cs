@@ -7,27 +7,46 @@ using PrimerWebUdemy.Models;
 using iTextSharp.text;
 using System.IO;
 using iTextSharp.text.pdf;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System.Drawing;
 
 namespace PrimerWebUdemy.Controllers
 {
     public class MarcaController : Controller
     {
         // GET: Marca
-        public ActionResult MarcaView()
+        public ActionResult MarcaView(MarcaCLS oMarcaCLS)
         {
             List<MarcaCLS> listaMarca = null;
             using (var bd = new BDPasajeEntities())
             {
-                listaMarca = (from d in bd.Marca
-                              where d.BHABILITADO == 1
-                              select new MarcaCLS
-                              {
-                                  iidmarca = d.IIDMARCA,
-                                  nombre = d.NOMBRE,
-                                  descripcion = d.DESCRIPCION
-                              }).ToList();
+                if (oMarcaCLS.nombre == null)  //Por si no tiene filtro de busqueda, me traiga todo
+                { 
+                    listaMarca = (from d in bd.Marca
+                                  where d.BHABILITADO == 1
+                                  select new MarcaCLS
+                                  {
+                                      iidmarca = d.IIDMARCA,
+                                      nombre = d.NOMBRE,
+                                      descripcion = d.DESCRIPCION
+                                  }).ToList();
 
-                Session["listaMarca"] = listaMarca;  //Lo utilizamos para poder hacer el reporte pdf
+                    Session["listaMarca"] = listaMarca;  //Lo utilizamos para poder hacer el reporte pdf
+                }
+                else  //Si tiene filtro de busqueda
+                {
+                    listaMarca = (from d in bd.Marca
+                                  where d.BHABILITADO == 1 && d.NOMBRE.Contains(oMarcaCLS.nombre)
+                                  select new MarcaCLS
+                                  {
+                                      iidmarca = d.IIDMARCA,
+                                      nombre = d.NOMBRE,
+                                      descripcion = d.DESCRIPCION
+                                  }).ToList();
+
+                    Session["listaMarca"] = listaMarca;  //Lo utilizamos para poder hacer el reporte pdf
+                }
             }
             return View(listaMarca);
         }
@@ -209,6 +228,57 @@ namespace PrimerWebUdemy.Controllers
             }
 
             return File(buffer, "application/pdf");
+        }
+
+
+        public FileResult generarExcelByte()
+        {
+            byte[] buffer;
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                //Hemos creado el documento
+                ExcelPackage ep = new ExcelPackage();
+
+                //Creando una hoja
+                ep.Workbook.Worksheets.Add("Reporte");
+
+                ExcelWorksheet ew = ep.Workbook.Worksheets[1]; //Hacemos referencia a la hoja de arriba
+
+                //Nombre de las columnas
+                ew.Cells[1, 1].Value = "Id Marca";
+                ew.Cells[1, 2].Value = "Nombre";
+                ew.Cells[1, 3].Value = "Descripcion";
+                ew.Column(1).Width = 20;
+                ew.Column(2).Width = 40;
+                ew.Column(3).Width = 180;
+
+                //Cambiando estilos a las celdas
+                using (var range = ew.Cells[1,1,1,3]) //Rango de celdas, de la (1,1) a (1,3)
+                {
+                    range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    range.Style.Font.Color.SetColor(Color.White);
+                    range.Style.Fill.BackgroundColor.SetColor(Color.DarkRed);
+                }
+
+                List<MarcaCLS> listaMarcaExcel=(List<MarcaCLS>)Session["listaMarca"];
+
+                int nregistros = listaMarcaExcel.Count();
+
+                for (int i= 0; i< nregistros; i++)
+                {
+                    ew.Cells[i + 2, 1].Value = listaMarcaExcel[i].iidmarca;
+                    ew.Cells[i + 2, 2].Value = listaMarcaExcel[i].nombre;
+                    ew.Cells[i + 2, 3].Value = listaMarcaExcel[i].descripcion;
+                }
+
+
+                //Guardando cambios en el excel
+                ep.SaveAs(ms);
+                buffer = ms.ToArray();
+            }
+            return File(buffer, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
         }
     }
 }

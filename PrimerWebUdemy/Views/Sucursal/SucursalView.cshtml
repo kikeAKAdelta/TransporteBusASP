@@ -9,6 +9,14 @@
 
 @Html.ActionLink("Agregar", "SucursalAgregar", "Sucursal", null, new { @class="btn btn-primary"})
 
+@using (Html.BeginForm("SucursalView", "Sucursal", FormMethod.Get, new { @id="frmBusqueda" }))
+{
+    <label>
+        Ingrese nombre sucursal:
+    </label>
+    @Html.TextBox("nombre")
+}
+
 <table class="table table-hover table-bordered">
     <tr>
         <th>@Html.LabelFor(d => Model[0].iidsucursal)</th>
@@ -47,5 +55,17 @@
             event.preventDefault();
         }
     }
+
+
+    var nombre = document.getElementById("nombre");
+    nombre.onkeyup = function () {
+        var frmBusqueda = document.getElementById("frmBusqueda");
+        frmBusqueda.submit();
+    }
+    //nombre.addEventListener("keyup", buscar(), false);
+
+    //function buscar(){
+    //    alert("Has presionado una tecla!");
+    //}
 </script>
 

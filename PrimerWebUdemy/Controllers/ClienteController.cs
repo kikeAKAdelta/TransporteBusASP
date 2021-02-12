@@ -10,21 +10,38 @@ namespace PrimerWebUdemy.Controllers
     public class ClienteController : Controller
     {
         // GET: Cliente
-        public ActionResult ClienteView()
+        public ActionResult ClienteView(ClienteCLS oClienteCLS)
         {
+            llenarSexo();
+            ViewBag.lista = listaSexo;
             List<ClienteCLS> listaCLiente = null;
             using (var bd = new BDPasajeEntities())
             {
-                listaCLiente = (from cliente in bd.Cliente
-                                where cliente.BHABILITADO == 1
-                                select new ClienteCLS
-                                {
-                                    iidcliente = cliente.IIDCLIENTE,
-                                    nombre = cliente.NOMBRE,
-                                    apPaterno = cliente.APPATERNO,
-                                    apMaterno = cliente.APMATERNO,
-                                    telefonoFijo = cliente.TELEFONOFIJO
-                                }).ToList();
+                if (oClienteCLS.iidsexo == 0)
+                {
+                    listaCLiente = (from cliente in bd.Cliente
+                                    where cliente.BHABILITADO == 1
+                                    select new ClienteCLS
+                                    {
+                                        iidcliente = cliente.IIDCLIENTE,
+                                        nombre = cliente.NOMBRE,
+                                        apPaterno = cliente.APPATERNO,
+                                        apMaterno = cliente.APMATERNO,
+                                        telefonoFijo = cliente.TELEFONOFIJO
+                                    }).ToList();
+                }else
+                {
+                    listaCLiente = (from cliente in bd.Cliente
+                                    where cliente.BHABILITADO == 1 && cliente.IIDSEXO == oClienteCLS.iidsexo
+                                    select new ClienteCLS
+                                    {
+                                        iidcliente = cliente.IIDCLIENTE,
+                                        nombre = cliente.NOMBRE,
+                                        apPaterno = cliente.APPATERNO,
+                                        apMaterno = cliente.APMATERNO,
+                                        telefonoFijo = cliente.TELEFONOFIJO
+                                    }).ToList();
+                }
             }
                 return View(listaCLiente);
         }

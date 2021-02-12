@@ -9,8 +9,16 @@
 <div class="container">
     @Html.ActionLink("Agregar", "MarcaAgregar", "Marca", null, new { @class="btn btn-primary"})
     @Html.ActionLink("Generar Pdf", "GenerarPdf", "Marca", null, new { @class = "btn btn-primary", @target="_blank" })
+    @Html.ActionLink("Generar EXCEL", "generarExcelByte", "Marca", null, new { @class = "btn btn-primary", @target = "_blank" })
     <br />
     <br />
+    @using (Html.BeginForm("MarcaView", "Marca", FormMethod.Post))
+    {
+        <label>Ingrese nombre Marca:</label>
+        @Html.TextBox("nombre")
+        <input type="submit" class="btn btn-success" value="Buscar" autocomplete="off" />
+    }
+    
     <div class="row">
         <table class="table table-hover">
             <tr>

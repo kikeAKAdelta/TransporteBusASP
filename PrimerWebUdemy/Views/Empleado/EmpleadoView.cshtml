@@ -2,6 +2,7 @@
 @model List<EmpleadoCLS>
 @{
     ViewBag.Title = "EmpleadoView";
+    List<SelectListItem> opcionesTipoUsuario = (List<SelectListItem>)ViewBag.listaTipoUsuarioViewBag;
 }
 
 <h2>Lista Empleados</h2>
@@ -9,6 +10,11 @@
 <div class="container">
     @Html.ActionLink("Agregar", "EmpleadoAdd", "Empleado", null, new { @class="btn btn-primary"})
 
+    @using (Html.BeginForm("EmpleadoView", "Empleado", FormMethod.Get, new {@id="frmBusqueda" }))
+    {
+        <label>Filtra Tipo de Usuario:</label>
+        @Html.DropDownList("iidtipoUsuario", opcionesTipoUsuario)
+    }
     <div class="row">
 
         <div class="col-md-12">
@@ -55,6 +61,13 @@
         } else {
             event.preventDefault();
         }
+    }
+
+    var iidTipoUsuario = document.getElementById("iidtipoUsuario");
+
+    iidTipoUsuario.onchange = function () {
+        var frmBusqueda = document.getElementById("frmBusqueda");
+        frmBusqueda.submit();
     }
 </script>
 

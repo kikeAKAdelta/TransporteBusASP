@@ -10,26 +10,48 @@ namespace PrimerWebUdemy.Controllers
     public class EmpleadoController : Controller
     {
         // GET: Empleado
-        public ActionResult EmpleadoView()
+        public ActionResult EmpleadoView(EmpleadoCLS oEmpleadoCLS)
         {
+            int iidTipoUsuario = oEmpleadoCLS.iidtipoUsuario;
             List<EmpleadoCLS> listaEmpleados = null;
+            listarComboTipoUsuario();
             using (var bd = new BDPasajeEntities())
             {
-                listaEmpleados = (from empleado in bd.Empleado
-                                  join tipousuario in bd.TipoUsuario
-                                  on empleado.IIDTIPOUSUARIO equals tipousuario.IIDTIPOUSUARIO
-                                  join tipocontrato in bd.TipoContrato
-                                  on empleado.IIDTIPOCONTRATO equals tipocontrato.IIDTIPOCONTRATO
-                                  where empleado.BHABILITADO == 1
-                                  select new EmpleadoCLS
-                                  {
-                                      iidEmpleado = empleado.IIDEMPLEADO,
-                                      nombre = empleado.NOMBRE,
-                                      apMaterno = empleado.APMATERNO,
-                                      apPaterno = empleado.APPATERNO,
-                                      nombreTipoUsuario = tipousuario.NOMBRE,
-                                      nombreTipoContrato = tipocontrato.NOMBRE
-                                  }).ToList();
+                if (iidTipoUsuario == 0)
+                {
+                    listaEmpleados = (from empleado in bd.Empleado
+                                      join tipousuario in bd.TipoUsuario
+                                      on empleado.IIDTIPOUSUARIO equals tipousuario.IIDTIPOUSUARIO
+                                      join tipocontrato in bd.TipoContrato
+                                      on empleado.IIDTIPOCONTRATO equals tipocontrato.IIDTIPOCONTRATO
+                                      where empleado.BHABILITADO == 1
+                                      select new EmpleadoCLS
+                                      {
+                                          iidEmpleado = empleado.IIDEMPLEADO,
+                                          nombre = empleado.NOMBRE,
+                                          apMaterno = empleado.APMATERNO,
+                                          apPaterno = empleado.APPATERNO,
+                                          nombreTipoUsuario = tipousuario.NOMBRE,
+                                          nombreTipoContrato = tipocontrato.NOMBRE
+                                      }).ToList();
+                }else
+                {
+                    listaEmpleados = (from empleado in bd.Empleado
+                                      join tipousuario in bd.TipoUsuario
+                                      on empleado.IIDTIPOUSUARIO equals tipousuario.IIDTIPOUSUARIO
+                                      join tipocontrato in bd.TipoContrato
+                                      on empleado.IIDTIPOCONTRATO equals tipocontrato.IIDTIPOCONTRATO
+                                      where empleado.BHABILITADO == 1 && empleado.IIDTIPOUSUARIO == iidTipoUsuario
+                                      select new EmpleadoCLS
+                                      {
+                                          iidEmpleado = empleado.IIDEMPLEADO,
+                                          nombre = empleado.NOMBRE,
+                                          apMaterno = empleado.APMATERNO,
+                                          apPaterno = empleado.APPATERNO,
+                                          nombreTipoUsuario = tipousuario.NOMBRE,
+                                          nombreTipoContrato = tipocontrato.NOMBRE
+                                      }).ToList();
+                }
             }
                 return View(listaEmpleados);
         }
@@ -204,12 +226,12 @@ namespace PrimerWebUdemy.Controllers
 
             using (var bd = new BDPasajeEntities())
             {
-                listaTipoUsuario = (from tipousuario in bd.TipoContrato
+                listaTipoUsuario = (from tipousuario in bd.TipoUsuario
                                      where tipousuario.BHABILITADO == 1
                                      select new SelectListItem
                                      {
                                          Text = tipousuario.NOMBRE,
-                                         Value = tipousuario.IIDTIPOCONTRATO.ToString()
+                                         Value = tipousuario.IIDTIPOUSUARIO.ToString()
                                      }).ToList();
 
                 listaTipoUsuario.Insert(0, new SelectListItem { Text = "-- Seleccione --", Value = "" });
