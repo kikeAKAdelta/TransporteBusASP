@@ -56,5 +56,25 @@
         }
 
     </table>
-
 }
+
+
+<script>
+    var iidTipoUsuario = document.getElementById("iidTipoUsuario");
+    var nombre = document.getElementById("nombre");
+    var descripcion = document.getElementById("descripcion");
+    var frmBusqueda = document.getElementById("frmBusqueda");
+
+    iidTipoUsuario.onkeyup = function () {
+        frmBusqueda.submit();
+    };
+
+    nombre.onkeyup = function () {
+        frmBusqueda.submit();
+    };
+
+    descripcion.onkeyup = function(){
+        frmBusqueda.submit();
+    };
+
+</script>
