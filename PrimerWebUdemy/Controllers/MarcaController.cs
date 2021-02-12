@@ -23,13 +23,12 @@ namespace PrimerWebUdemy.Controllers
             {
                 if (oMarcaCLS.nombre == null)  //Por si no tiene filtro de busqueda, me traiga todo
                 { 
-                    listaMarca = (from d in bd.Marca
-                                  where d.BHABILITADO == 1
-                                  select new MarcaCLS
-                                  {
-                                      iidmarca = d.IIDMARCA,
-                                      nombre = d.NOMBRE,
-                                      descripcion = d.DESCRIPCION
+                    listaMarca = bd.Marca
+                                .Where(x=>x.BHABILITADO==1)
+                                .Select( x => new MarcaCLS {
+                                      iidmarca = x.IIDMARCA,
+                                      nombre = x.NOMBRE,
+                                      descripcion = x.DESCRIPCION
                                   }).ToList();
 
                     Session["listaMarca"] = listaMarca;  //Lo utilizamos para poder hacer el reporte pdf
