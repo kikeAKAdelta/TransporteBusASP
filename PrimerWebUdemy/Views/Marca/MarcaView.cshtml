@@ -34,8 +34,8 @@
                 <td>@elemento.nombre</td>
                 <td>@elemento.descripcion</td>
                 <td>
-                    @Html.ActionLink(" ", "MarcaEditar", "Marca", new { id = @elemento.iidmarca }, new { @class="glyphicon glyphicon-edit btn btn-primary" } )
-                    @Html.ActionLink(" ", "EliminarView","Marca", new { id = @elemento.iidmarca }, new { @class="glyphicon glyphicon-trash btn btn-danger", @onclick= "eliminar()" })
+                    @Html.ActionLink(" ", "MarcaEditar", "Marca", new { id = @elemento.iidmarca }, new { @class="fas fa-edit btn btn-primary" } )
+                    @Html.ActionLink(" ", "EliminarView","Marca", new { id = @elemento.iidmarca }, new { @class= "fas fa-minus-circle btn btn-danger", @onclick= "eliminar()" })
                 </td>
             </tr>
             }

@@ -6,42 +6,40 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Marca", "MarcaView", "Marca", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Sucursal", "SucursalView", "Sucursal", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Cliente", "ClienteView", "Cliente", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Empleado", "EmpleadoView", "Empleado", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Bus", "BusView", "Bus", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Viaje", "ViajeView", "Viaje", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Tipo Usuario", "TipoUsuarioView", "TipoUsuario", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Rol Usuario", "RolView", "Rol", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Pagina", "PaginaView", "Pagina", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
-            </div>
+    <div class="container">
+        <div class="navbar navbar-light bg-light">
+            <a class="navbar-brand" style="font-size: 2em; color: green;" href="#">
+                <i class="fas fa-home"></i>
+            </a>
+            @Html.ActionLink("Marca", "MarcaView", "Marca", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Sucursal", "SucursalView", "Sucursal", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Cliente", "ClienteView", "Cliente", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Empleado", "EmpleadoView", "Empleado", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Bus", "BusView", "Bus", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Viaje", "ViajeView", "Viaje", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Tipo Usuario", "TipoUsuarioView", "TipoUsuario", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Rol Usuario", "RolView", "Rol", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Pagina", "PaginaView", "Pagina", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav"></ul>
         </div>
     </div>
-
     <div class="container body-content">
         @RenderBody()
         <hr />
         
     </div>
 
+    
+    <script src="~/Scripts/jquery-3.0.0.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+
     
 </body>
 </html>
